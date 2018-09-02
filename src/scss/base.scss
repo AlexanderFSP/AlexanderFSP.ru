@@ -1,0 +1,84 @@
+@import "normalize";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 2.5vh;
+}
+
+body {
+  background: url('../img/background.gif');
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.wrapper {
+  height: 95vh;
+  width: 47.37vh;
+  position: relative;
+  margin: 2.5vh auto;
+
+    .display {
+      height: 100%;
+      width: 100%;
+      padding: 6% 6.1%;
+      padding-right: 6.15%;
+
+      position: absolute;
+      z-index: 10;
+      background-image: url('../img/iphonex.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+
+      header {
+        height: 10%;
+        border-bottom: 1px solid black;
+
+        .status-bar {
+          height: 38%;
+          font-size: 0.65rem;
+          font-weight: 600;
+
+          .status-bar__time {
+            float: left;
+            width: 22%;
+            padding: {
+              top: 3.5%;
+              left: 6.5%;
+            }
+
+            background-image: url('../img/location.png');
+            background-repeat: no-repeat;
+            background-position: 87.5% 79%;
+            background-size: 0.40rem;
+          }
+          .status-bar__battery {
+            float: right;
+            width: 22%;
+            height: 100%;
+            background-image: url('../img/icons.png');
+            background-repeat: no-repeat;
+            background-position: 6% 76%;
+            background-size: auto 0.55rem;
+          }
+        }
+        
+        .top-tg-bar {
+
+        }
+      }
+    }
+
+    .screen-bg {
+      height: 95%;
+      width: 87%;
+      background: #fff;
+      margin: 6% 6.8%;
+
+      position: absolute;
+    }
+}
