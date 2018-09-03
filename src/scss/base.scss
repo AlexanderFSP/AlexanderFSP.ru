@@ -1,9 +1,5 @@
 @import "normalize";
 
-@mixin element-color($color) {
-  background-image: url('data:image/svg+xml;utf8,<svg ...><g stroke="#{$color}" ... /></g></svg>');
-}
-
 * {
   box-sizing: border-box;
 }
@@ -18,7 +14,6 @@ html {
 
 body {
   background: url('../img/background.gif');
-
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
@@ -34,7 +29,6 @@ body {
       width: 100%;
       padding: 6% 6.1%;
       padding-right: 6.15%;
-
       position: absolute;
       z-index: 10;
       background-image: url('../img/iphonex.png');
@@ -53,11 +47,8 @@ body {
           .status-bar__time {
             float: left;
             width: 22%;
-            padding: {
-              top: 3.5%;
-              left: 6.5%;
-            }
-
+            padding-top: 3.5%;
+            padding-left: 6.5%;
             background-image: url('../img/location.png');
             background-repeat: no-repeat;
             background-position: 87.5% 79%;
@@ -155,8 +146,8 @@ body {
         nav {
           height: 80%;
           background: #ebece7;
-          border-bottom-right-radius: 29px;
-          border-bottom-left-radius: 29px;
+          border-bottom-right-radius: 1.7rem;
+          border-bottom-left-radius: 1.7rem;
         }
       }
     }

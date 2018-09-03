@@ -10,22 +10,33 @@ const gulp         = require('gulp'),
       autoprefixer = require('gulp-autoprefixer'),
       cssmin       = require('gulp-cssmin'),
       imagemin     = require('gulp-imagemin'),
-      pngquant     = require('imagemin-pngquant');
+      pngquant     = require('imagemin-pngquant'),
+      babel        = require('gulp-babel'),
+      rename       = require('gulp-rename'),
+      concat       = require('gulp-concat'),
+      uglify       = require('gulp-uglify');
 
 const path = {
   build: {
-    html:  './build/',
+    html: './build/',
     css: './build/css/',
-    img:   './build/img/'
+    js:  './build/js/',
+    img: './build/img/'
   },
   src: {
     html: './src/*.html',
     scss: './src/scss/**/*.scss',
+    js: {
+      base: './src/js/script.js',
+      baseTranspiled: './src/js/_script.js',
+      jQuery: './src/js/jquery-3.3.1.min.js'
+    },
     img:  './src/img/**/*.*'
   },
   watch: {
     html: './src/*.html',
     scss: './src/scss/**/*.scss',
+    js:   './src/js/**/*.js',
     img:  './src/img/**/*.*'
   },
   clean: './build/**/*.*'
@@ -66,11 +77,35 @@ gulp.task('scss:build', function() {
               browsers: ['last 2 versions'],
               cascade: false
             }))
-            // .pipe(cssmin())
+            .pipe(cssmin())
             .pipe(gulp.dest(path.build.css))
             .pipe(reload({stream: true}))
             .pipe(notify('Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css'));
 });
+
+/**
+ * 
+ */
+gulp.task('js:transpile', function() {
+  return gulp.src(path.src.js.base)
+            .pipe(babel())
+            .pipe(rename('_script.js'))
+            .pipe(gulp.dest('./src/js/'));
+});
+
+/**
+ *  Слияние jQuery и скриптов в один файл, транспиляция JS в ES5, минификация и перенос в path.build.js
+ */
+gulp.task('js:build', gulp.series('js:transpile', function() {
+  return gulp.src([
+              path.src.js.jQuery,
+              path.src.js.baseTranspiled
+            ])
+            .pipe(concat('scripts.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest(path.build.js))
+            .pipe(reload({stream: true}));
+}));
 
 /**
  *  Оптимизация изображений и перенос в path.build.img
@@ -91,7 +126,7 @@ gulp.task('image:build', function() {
 /**
  *  Общая задача сборки проекта в ./build/
  */
-gulp.task('build', gulp.series('clean', gulp.parallel('html:build', 'scss:build', 'image:build')));
+gulp.task('build', gulp.series('clean', gulp.parallel('html:build', 'scss:build', 'js:build', 'image:build')));
 
 /**
  *  Запуск сервера
@@ -111,6 +146,7 @@ gulp.task('webserver', function() {
 gulp.task('watch', function() {
   gulp.watch(path.watch.html, gulp.task('html:build'));
   gulp.watch(path.watch.scss, gulp.task('scss:build'));
+  gulp.watch(path.watch.js,   gulp.task('js:build'));
   gulp.watch(path.watch.img,  gulp.task('image:build'));
 });
 

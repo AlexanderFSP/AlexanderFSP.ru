@@ -11,7 +11,7 @@
     "url": "git+https://github.com/AlexanderFSP/AlexanderFSP.ru.git"
   },
   "keywords": [
-    "personal website",
+    "personal_website",
     "portfolio"
   ],
   "author": "AlexanderFSP",
@@ -21,19 +21,26 @@
   },
   "homepage": "https://github.com/AlexanderFSP/AlexanderFSP.ru#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.24.7",
-    "gulp": "^4.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-html-prettify": "0.0.1",
     "gulp-imagemin": "^4.1.0",
     "gulp-notify": "^3.2.0",
+    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.1",
     "node-normalize-scss": "^8.0.0"
   },
   "dependencies": {
     "del": "^3.0.0",
-    "imagemin-pngquant": "^6.0.0",
-    "normalize.css": "^8.0.0"
+    "imagemin-pngquant": "^6.0.0"
   }
 }
