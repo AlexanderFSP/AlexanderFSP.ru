@@ -1,7 +1,15 @@
 @import "normalize";
 
+@mixin element-color($color) {
+  background-image: url('data:image/svg+xml;utf8,<svg ...><g stroke="#{$color}" ... /></g></svg>');
+}
+
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
 }
 
 html {
@@ -36,10 +44,9 @@ body {
 
       header {
         height: 10%;
-        border-bottom: 1px solid black;
 
         .status-bar {
-          height: 38%;
+          height: 42%;
           font-size: 0.65rem;
           font-weight: 600;
 
@@ -62,13 +69,94 @@ body {
             height: 100%;
             background-image: url('../img/icons.png');
             background-repeat: no-repeat;
-            background-position: 6% 76%;
+            background-position: 6% 67%;
             background-size: auto 0.55rem;
           }
         }
         
         .top-tg-bar {
+          height: 58%;
+          width: 99.02%;
+          margin-left: .8%;
+          border-bottom: 1px solid lightgray;
 
+          .top-tg-bar__back {
+            float: left;
+            width: 25%;
+            height: 100%;
+            font-size: 0.8rem;
+
+            a {
+              display: block;
+              height: 100%;
+              padding: 14.5% 28%;
+              color: #117ce6;
+              background-image: url('../img/angle-left.png');
+              background-repeat: no-repeat;
+              background-position: 6% center;
+              background-size: 1rem;
+            }
+          }
+
+          .top-tg-bar__chat-name {
+            float: left;
+            width: 50%;
+            height: 100%;
+            padding-top: 1.8%;
+
+            p {
+              font-size: 0.7rem;
+              font-weight: bold;
+              text-align: center;
+              margin: 0 auto;
+
+              span {
+                font-size: 0.55rem;
+                font-weight: 400;
+                color: lightgray;
+              }
+            }
+          }
+
+          .top-tg-bar__chat-photo {
+            float: left;
+            width: 25%;
+            height: 100%;
+
+            background-image: url('../img/chat-image.png');
+            background-repeat: no-repeat;
+            background-position: 90% 40%;
+            background-size: 1.6rem;
+          }
+        }
+      }
+
+      main {
+        height: 60%;
+        width: 98.75%;
+        margin-left: .91%;
+        background-image: url('../img/chat-background.jpg');
+        background-repeat: no-repeat;
+        background-position: left center;
+      }
+
+      footer {
+        height: 30%;
+        width: 98.75%;
+        margin-left: .91%;
+
+
+        .input-field {
+          height: 20%;
+          border-bottom: 1px solid lightgray;
+          background: #fafafa;
+        }
+
+        nav {
+          height: 80%;
+          background: #ebece7;
+          border-bottom-right-radius: 29px;
+          border-bottom-left-radius: 29px;
         }
       }
     }
@@ -76,7 +164,7 @@ body {
     .screen-bg {
       height: 95%;
       width: 87%;
-      background: #fff;
+      background: #f7f7f7;
       margin: 6% 6.8%;
 
       position: absolute;
