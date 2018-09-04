@@ -84,7 +84,7 @@ gulp.task('scss:build', function() {
 });
 
 /**
- * 
+ *  Транспиляция JS в ES5
  */
 gulp.task('js:transpile', function() {
   return gulp.src(path.src.js.base)
@@ -94,7 +94,7 @@ gulp.task('js:transpile', function() {
 });
 
 /**
- *  Слияние jQuery и скриптов в один файл, транспиляция JS в ES5, минификация и перенос в path.build.js
+ *  Слияние jQuery и базовых скриптов в один файл, минификация и перенос в path.build.js
  */
 gulp.task('js:build', gulp.series('js:transpile', function() {
   return gulp.src([

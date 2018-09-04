@@ -1,5 +1,10 @@
 @import "normalize";
 
+@mixin bgli($url, $left, $top) {
+  background-image: url($url);
+  background-position: $left $top;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -13,7 +18,10 @@ html {
 }
 
 body {
-  background: url('../img/background.gif');
+  background: url('../img/telegram-hex-colors-gradient-background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
@@ -42,7 +50,7 @@ body {
         .status-bar {
           height: 42%;
           font-size: 0.65rem;
-          font-weight: 600;
+          font-weight: 500;
 
           .status-bar__time {
             float: left;
@@ -61,15 +69,15 @@ body {
             background-image: url('../img/icons.png');
             background-repeat: no-repeat;
             background-position: 6% 67%;
-            background-size: auto 0.55rem;
+            background-size: auto 0.53rem;
           }
         }
         
         .top-tg-bar {
           height: 58%;
-          width: 99.02%;
+          width: 98.75%;
           margin-left: .8%;
-          border-bottom: 1px solid lightgray;
+          border-bottom: 0.01rem solid lightgray;
 
           .top-tg-bar__back {
             float: left;
@@ -97,7 +105,7 @@ body {
 
             p {
               font-size: 0.7rem;
-              font-weight: bold;
+              font-weight: 500;
               text-align: center;
               margin: 0 auto;
 
@@ -123,31 +131,125 @@ body {
       }
 
       main {
-        height: 60%;
+        height: 66%;
         width: 98.75%;
         margin-left: .91%;
         background-image: url('../img/chat-background.jpg');
         background-repeat: no-repeat;
-        background-position: left center;
+        background-position: center center;
+        background-size: cover;
       }
 
       footer {
-        height: 30%;
+        height: 24%;
         width: 98.75%;
         margin-left: .91%;
 
 
         .input-field {
-          height: 20%;
-          border-bottom: 1px solid lightgray;
+          height: 21%;
+          border-top: 0.01rem solid lightgray;
+          border-bottom: 0.01rem solid lightgray;
           background: #fafafa;
+
+          .input-field__media {
+            float: left;
+            width: 11%;
+            height: 100%;
+            background-image: url('../img/attach-icon.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 1rem;
+          }
+
+          .input-field__text {
+            float: left;
+            width: 78%;
+            
+            #text-message {
+              margin-top: 3%;
+              font-size: 0.6rem;
+              font-weight: 300;
+              width: 100%;
+              border: 0px;
+              border: none transparent;
+              outline: none;
+              padding: {
+                top: 1.5%;
+                right: 13%;
+                bottom:  1.5%;
+                left: 3%;
+              }
+              border-radius: 0.5rem;
+              box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
+
+              background-image: url('../img/rounded-rectangle-stroked1.png');
+              background-repeat: no-repeat;
+              background-position: 96% 100%;
+              background-size: 1.1rem;
+            }
+          }
+
+          .input-field__voice {
+            float: left;
+            width: 11%;
+            height: 100%;
+            background-image: url('../img/microphone.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 1rem;
+          }
         }
 
         nav {
-          height: 80%;
+          height: 79%;
           background: #ebece7;
           border-bottom-right-radius: 1.7rem;
           border-bottom-left-radius: 1.7rem;
+
+          ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+              float: left;
+              width: 46%;
+              padding: {
+                top: 5%;
+                bottom: 5%;
+                right: 0.75rem;
+              }
+              margin: 2.25% 2%;
+              text-align: center;
+              font-size: 0.65rem;
+              background: #fafafa;
+              border-radius: 0.3rem;
+              box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
+              background-repeat: no-repeat;
+              background-size: 0.65rem;
+
+              &:hover {
+                box-shadow: 0.08rem 0.08rem 0.4rem 0rem lightgray;
+              }
+
+              &:first-child {
+                @include bgli('../img/waving-hand.png', 71%, 44%);
+              }
+
+              &:nth-child(2) {
+                @include bgli('../img/briefcase.png', 78%, 44%);
+              }
+
+              &:nth-child(3) {
+                @include bgli('../img/programmer.png', 94%, 44%);
+              }
+
+              &:last-child {
+                @include bgli('../img/incoming-envelope.png', 74%, 44%);
+              }
+            }
+          }
         }
       }
     }
