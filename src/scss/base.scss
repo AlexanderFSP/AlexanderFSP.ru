@@ -59,7 +59,7 @@ body {
             padding-left: 6.5%;
             background-image: url('../img/location.png');
             background-repeat: no-repeat;
-            background-position: 87.5% 79%;
+            background-position:-9999px;
             background-size: 0.40rem;
           }
           .status-bar__battery {
@@ -138,6 +138,7 @@ body {
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
+        overflow: hidden;
       }
 
       footer {

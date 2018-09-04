@@ -11,6 +11,9 @@ const gulp         = require('gulp'),
       cssmin       = require('gulp-cssmin'),
       imagemin     = require('gulp-imagemin'),
       pngquant     = require('imagemin-pngquant'),
+      plumber      = require('gulp-plumber'),
+      gutil        = require('gulp-util'),
+      jshint       = require('gulp-jshint'),
       babel        = require('gulp-babel'),
       rename       = require('gulp-rename'),
       concat       = require('gulp-concat'),
@@ -28,15 +31,9 @@ const path = {
     scss: './src/scss/**/*.scss',
     js: {
       base: './src/js/script.js',
-      baseTranspiled: './src/js/_script.js',
+      baseTranspiled: './src/js/transpiled-script.js',
       jQuery: './src/js/jquery-3.3.1.min.js'
     },
-    img:  './src/img/**/*.*'
-  },
-  watch: {
-    html: './src/*.html',
-    scss: './src/scss/**/*.scss',
-    js:   './src/js/**/*.js',
     img:  './src/img/**/*.*'
   },
   clean: './build/**/*.*'
@@ -63,8 +60,8 @@ gulp.task('html:build', function() {
               indent_size: 2
             }))
             .pipe(gulp.dest(path.build.html))
-            .pipe(reload({stream: true}))
-            .pipe(notify('Обработка HTML и перенос в path.build.html'));
+            .pipe(notify('Обработка HTML и перенос в path.build.html'))
+            .pipe(reload({stream: true}));
 });
 
 /**
@@ -72,15 +69,15 @@ gulp.task('html:build', function() {
  */
 gulp.task('scss:build', function() {
   return gulp.src(path.src.scss)
-            .pipe(sass({includePaths: require('node-normalize-scss').includePaths}))
+            .pipe(sass({includePaths: require('node-normalize-scss').includePaths}).on('error', sass.logError))
             .pipe(autoprefixer({
               browsers: ['last 2 versions'],
               cascade: false
             }))
             .pipe(cssmin())
             .pipe(gulp.dest(path.build.css))
-            .pipe(reload({stream: true}))
-            .pipe(notify('Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css'));
+            .pipe(notify('Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css'))
+            .pipe(reload({stream: true}));
 });
 
 /**
@@ -88,15 +85,23 @@ gulp.task('scss:build', function() {
  */
 gulp.task('js:transpile', function() {
   return gulp.src(path.src.js.base)
+            .pipe(plumber())
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'))
             .pipe(babel())
-            .pipe(rename('_script.js'))
-            .pipe(gulp.dest('./src/js/'));
+            .on('error', (err) => {
+              gutil.log(gutil.colors.red('[Compilation Error]'));
+              gutil.log(gutil.colors.red(err.message));
+            })
+            .pipe(rename('transpiled-script.js'))
+            .pipe(gulp.dest('./src/js/'))
+            .pipe(notify('Транспиляция JS в ES5'));
 });
 
 /**
  *  Слияние jQuery и базовых скриптов в один файл, минификация и перенос в path.build.js
  */
-gulp.task('js:build', gulp.series('js:transpile', function() {
+gulp.task('js:concat', function() {
   return gulp.src([
               path.src.js.jQuery,
               path.src.js.baseTranspiled
@@ -104,8 +109,14 @@ gulp.task('js:build', gulp.series('js:transpile', function() {
             .pipe(concat('scripts.min.js'))
             .pipe(uglify())
             .pipe(gulp.dest(path.build.js))
+            .pipe(notify('Слияние jQuery и базовых скриптов в один файл, минификация и перенос в path.build.js'))
             .pipe(reload({stream: true}));
-}));
+});
+
+/**
+ *  Сборка скриптов
+ */
+gulp.task('js:build', gulp.series('js:transpile', 'js:concat'));
 
 /**
  *  Оптимизация изображений и перенос в path.build.img
@@ -119,8 +130,8 @@ gulp.task('image:build', function() {
               interlaced: true
             }))
             .pipe(gulp.dest(path.build.img))
-            .pipe(reload({stream: true}))
-            .pipe(notify('Оптимизация изображений и перенос в path.build.img'));
+            .pipe(notify('Оптимизация изображений и перенос в path.build.img'))
+            .pipe(reload({stream: true}));
 });
       
 /**
@@ -144,10 +155,10 @@ gulp.task('webserver', function() {
  *  Наблюдение за изменениями
  */
 gulp.task('watch', function() {
-  gulp.watch(path.watch.html, gulp.task('html:build'));
-  gulp.watch(path.watch.scss, gulp.task('scss:build'));
-  gulp.watch(path.watch.js,   gulp.task('js:build'));
-  gulp.watch(path.watch.img,  gulp.task('image:build'));
+  gulp.watch(path.src.html,    gulp.task('html:build'));
+  gulp.watch(path.src.scss,    gulp.task('scss:build'));
+  gulp.watch(path.src.js.base, gulp.task('js:build'));
+  gulp.watch(path.src.img,     gulp.task('image:build'));
 });
 
 /**

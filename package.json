@@ -33,10 +33,14 @@
     "gulp-cssmin": "^0.2.0",
     "gulp-html-prettify": "0.0.1",
     "gulp-imagemin": "^4.1.0",
+    "gulp-jshint": "^2.1.0",
     "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.1",
+    "gulp-util": "^3.0.8",
+    "jshint": "^2.9.6",
     "node-normalize-scss": "^8.0.0"
   },
   "dependencies": {
