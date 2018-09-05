@@ -1,4 +1,5 @@
-@import "normalize";
+@import url('normalize.css');
+@import url('animate.css');
 
 @mixin bgli($url, $left, $top) {
   background-image: url($url);
@@ -151,14 +152,13 @@ body {
         }
 
         article {
-          margin: {
-            bottom: 2%;
-            right: 0.7rem;
-            left: 0.7rem;
-          }
+          margin-right: 0.7rem;
+          margin-left: 0.7rem;
+          padding-bottom: 2%;
 
-          p.user {
+          p.user-text {
             float: right;
+            max-width: 70%;
             font-size: 0.7rem;
             color: #3260ad;
             background-color: #e4fbcf;
@@ -268,7 +268,8 @@ body {
               box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
               background-repeat: no-repeat;
               background-size: 0.65rem;
-
+              display: none;
+              
               &:hover {
                 box-shadow: 0.08rem 0.08rem 0.4rem 0rem lightgray;
               }
