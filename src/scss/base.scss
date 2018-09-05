@@ -133,7 +133,7 @@ body {
         }
       }
 
-      main {
+      main#chat {
         height: 66%;
         width: 99.46%;
         background-image: url('../img/chat-background.jpg');
@@ -148,6 +148,30 @@ body {
         }
         @media only screen and (min-width: 2559px) {
           width: 99.55%;
+        }
+
+        article {
+          margin: {
+            bottom: 2%;
+            right: 0.7rem;
+            left: 0.7rem;
+          }
+
+          p.user {
+            float: right;
+            font-size: 0.7rem;
+            color: #3260ad;
+            background-color: #e4fbcf;
+            border-radius: 1rem;
+            border: 0.03rem solid #d4d9df;
+            margin: 0;
+            padding: {
+              top: 1.9%;
+              right: 10%;
+              bottom: 1.6%;
+              left: 4%;
+            }
+          }
         }
       }
 
