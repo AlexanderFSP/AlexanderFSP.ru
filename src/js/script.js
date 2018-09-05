@@ -14,84 +14,58 @@
   });
 
   /**
-   *  main | Отображение анимаций получения/отправки сообщений
+   *  Инициализация бота: отправка сообщения '/start', отображение навигации бота
    */
   $(function() {
-    // Происходит набор текста...
-
     let top = 138;
     const MAGIC_RATIO = 1.431;
     setTimeout(function() {
       const article = document.createElement('article');
-      article.innerHTML = '<p class="user">/start</p><div style="clear:both"></div>';
+      article.innerHTML = '<p class="user-text">/start</p><div style="clear:both"></div>';
       $('#chat').append(article);
 
-      const articleHeight = parseFloat($('article:first-of-type').height());
-      const mainHeight    = parseFloat($('#chat').outerHeight());
-      const percent       = (articleHeight / mainHeight) * 100;
+      const articleHeight = parseFloat($('article:first-of-type').height()),
+            mainHeight    = parseFloat($('#chat').outerHeight()),
+            percent       = (articleHeight / mainHeight) * 100;
       top -= percent;
-      console.log(articleHeight, mainHeight, percent);
       $('article:first-of-type').css('margin-top', top + '%');
-    }, 1000);
 
+      setTimeout(function() {
+        $('footer>nav>ul>li').addClass('animated jackInTheBox fast');
+        $('footer>nav>ul>li').css('display', 'block');
+      }, 200);
+    }, 800);
+
+    /**
+     *  Запрос на получение информации обо мне
+     */
     $('li#about-me').on('click', function() {
+      $('article').css('transition', 'all 0.1s linear');
+
       const article = document.createElement('article');
-      article.innerHTML = `<p class="user">${Math.random(1000)}</p><div style="clear:both"></div>`;
+      article.innerHTML = `<p class="user-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ullam sed eius totam ducimus consequatur, illo nobis rerum, placeat soluta magni ipsum sapiente expedita pariatur libero commodi laborum! Voluptatum, eveniet!</p><div style="clear:both"></div>`;
+      $(article).addClass('animated fadeInUp faster');
       $('#chat').append(article);
 
-      const articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000;
-      const mainHeight    = Math.round(parseFloat($('#chat').outerHeight()) * 1000) / 1000;
-      const percent       = ((articleHeight / mainHeight) * 100) * MAGIC_RATIO;
+      const articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000,
+            mainHeight    = Math.round(parseFloat($('#chat').outerHeight()) * 1000) / 1000,
+            percent       = ((articleHeight / mainHeight) * 100) * MAGIC_RATIO;
       top -= percent;
-      console.log(articleHeight, mainHeight, percent);
-
 
       if (top > 0) {
         $('article:first-of-type').css('margin-top', top + '%');
       } else {
+        $(article).removeClass('animated fadeInUp faster');
+        $('article').css('transition', 'none');
         $('article:first-of-type').css('margin-top', '2%');
-        $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        $(article).get(0).scrollIntoView({ block: 'end',  behavior: 'smooth' });
       }
-    });
 
-    $('li#portfolio').on('click', function() {
-      const article = document.createElement('article');
-      article.innerHTML = `<p class="user">Dolores animi omnis dolore nisi repellendus ex at impedit odio iste libero sit asperiores alias quaerat nostrum nihil voluptatibus, error reiciendis earum.</p><div style="clear:both"></div>`;
-      $('#chat').append(article);
-
-      const articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000;
-      const mainHeight    = Math.round(parseFloat($('#chat').outerHeight()) * 1000) / 1000;
-      const percent       = ((articleHeight / mainHeight) * 100) * MAGIC_RATIO;
-      top -= percent;
-      console.log(articleHeight, mainHeight, percent);
-
-
-      if (top > 0) {
-        $('article:first-of-type').css('margin-top', top + '%');
-      } else {
-        $('article:first-of-type').css('margin-top', '2%');
-        $('#chat').scrollTop($('#chat')[0].scrollHeight);
-      }
-    });
-
-    $('li#offer-me').on('click', function() {
-      const article = document.createElement('article');
-      article.innerHTML = `<p class="user">Dolores animi omnis dolore nisi repellendus ex at impedit odio iste libero sit asperiores alias quaerat nostrum nihil voluptatibus, error reiciendis earum.Dolores animi omnis dolore nisi repellendus ex at impedit odio iste libero sit asperiores alias quaerat nostrum nihil voluptatibus, error reiciendis earum.</p><div style="clear:both"></div>`;
-      $('#chat').append(article);
-
-      const articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000;
-      const mainHeight    = Math.round(parseFloat($('#chat').outerHeight()) * 1000) / 1000;
-      const percent       = ((articleHeight / mainHeight) * 100) * MAGIC_RATIO;
-      top -= percent;
-      console.log(articleHeight, mainHeight, percent);
-
-
-      if (top > 0) {
-        $('article:first-of-type').css('margin-top', top + '%');
-      } else {
-        $('article:first-of-type').css('margin-top', '2%');
-        $('#chat').scrollTop($('#chat')[0].scrollHeight);
-      }
+      $('footer>nav>ul>li').css('pointer-events', 'none');
+      const timerId = setInterval(function() {
+        $('footer>nav>ul>li').css('pointer-events', 'auto');
+        clearInterval(timerId);
+      }, 400);
     });
   });
 })(jQuery);

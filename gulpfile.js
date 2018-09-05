@@ -7,6 +7,7 @@ const gulp         = require('gulp'),
       reload       = browserSync.reload,
       prettify     = require('gulp-html-prettify'),
       sass         = require('gulp-sass'),
+      importCss    = require('gulp-import-css'),
       autoprefixer = require('gulp-autoprefixer'),
       cssmin       = require('gulp-cssmin'),
       imagemin     = require('gulp-imagemin'),
@@ -65,11 +66,12 @@ gulp.task('html:build', function() {
 });
 
 /**
- *  Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css
+ *  Компиляция SASS в CSS, импорт CSS-библиотек, установка префиксов и перенос в path.build.css
  */
 gulp.task('scss:build', function() {
   return gulp.src(path.src.scss)
-            .pipe(sass({includePaths: require('node-normalize-scss').includePaths}).on('error', sass.logError))
+            .pipe(sass().on('error', sass.logError))
+            .pipe(importCss())
             .pipe(autoprefixer({
               browsers: ['last 2 versions'],
               cascade: false
