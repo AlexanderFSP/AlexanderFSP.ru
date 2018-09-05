@@ -10,18 +10,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 !function ($, undefined) {
   /**
-   *  .status-bar__time | Отображение актуального времемни на iPhone X
+   *  .status-bar__time | Отображение актуального времени на iPhone X
    */
   $('.status-bar__time time').ready(function () {
-    setInterval(function () {
-      var _toLocaleTimeString$s = new Date().toLocaleTimeString().split(':'),
-          _toLocaleTimeString$s2 = _slicedToArray(_toLocaleTimeString$s, 2),
-          hours = _toLocaleTimeString$s2[0],
-          minutes = _toLocaleTimeString$s2[1];
+    var _toLocaleTimeString$s = new Date().toLocaleTimeString().split(':'),
+        _toLocaleTimeString$s2 = _slicedToArray(_toLocaleTimeString$s, 2),
+        hours = _toLocaleTimeString$s2[0],
+        minutes = _toLocaleTimeString$s2[1];
 
-      document.querySelector('.status-bar__time time').innerText = hours + ':' + minutes;
-      $('.status-bar__time').css("background-position", "87.5% 79%");
-    }, 1000);
+    $('.status-bar__time time').text(hours + ':' + minutes);
+    $('.status-bar__time').css("background-position", "87.5% 79%");
+    setInterval(function () {
+      var _toLocaleTimeString$s3 = new Date().toLocaleTimeString().split(':'),
+          _toLocaleTimeString$s4 = _slicedToArray(_toLocaleTimeString$s3, 2),
+          hours = _toLocaleTimeString$s4[0],
+          minutes = _toLocaleTimeString$s4[1];
+
+      $('.status-bar__time time').text(hours + ':' + minutes);
+    }, 2000);
   });
   /**
    *  main | Отображение анимаций получения/отправки сообщений

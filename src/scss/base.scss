@@ -28,15 +28,14 @@ body {
 
 .wrapper {
   height: 95vh;
-  width: 47.37vh;
+  width: 47.38vh;
   position: relative;
   margin: 2.5vh auto;
 
     .display {
       height: 100%;
       width: 100%;
-      padding: 6% 6.1%;
-      padding-right: 6.15%;
+      padding: 6% 6.14% 6% 6.54%;
       position: absolute;
       z-index: 10;
       background-image: url('../img/iphonex.png');
@@ -44,8 +43,13 @@ body {
       background-position: center;
       background-size: cover;
 
+      @media only screen and (min-width: 1440px) and (max-width: 2559px) {
+        padding-left: 6.53%;
+      }
+
       header {
         height: 10%;
+        width: 100%;
 
         .status-bar {
           height: 42%;
@@ -75,9 +79,8 @@ body {
         
         .top-tg-bar {
           height: 58%;
-          width: 98.75%;
+          width: 98.7%;
           margin-left: .8%;
-          border-bottom: 0.01rem solid lightgray;
 
           .top-tg-bar__back {
             float: left;
@@ -132,20 +135,32 @@ body {
 
       main {
         height: 66%;
-        width: 98.75%;
-        margin-left: .91%;
+        width: 99.46%;
         background-image: url('../img/chat-background.jpg');
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
-        overflow: hidden;
+        overflow: scroll;
+        border-top: 0.01rem solid lightgray;
+
+        @media only screen and (min-width: 1440px) {
+          width: 99.6%;
+        }
+        @media only screen and (min-width: 2559px) {
+          width: 99.55%;
+        }
       }
 
       footer {
         height: 24%;
-        width: 98.75%;
-        margin-left: .91%;
+        width: 99.4%;
 
+        @media only screen and (min-width: 1440px) {
+          width: 99.6%;
+        }
+        @media only screen and (min-width: 2559px) {
+          width: 99.55%;
+        }
 
         .input-field {
           height: 21%;
@@ -259,8 +274,7 @@ body {
       height: 95%;
       width: 87%;
       background: #f7f7f7;
-      margin: 6% 6.8%;
-
+      margin: 6% 6.5%;
       position: absolute;
     }
 }
