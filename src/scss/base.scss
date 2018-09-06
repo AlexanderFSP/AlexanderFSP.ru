@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background: url('../img/telegram-hex-colors-gradient-background.png') no-repeat;
+  background: url('../img/background.png') no-repeat;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -150,6 +150,11 @@ body {
             left: 0.6rem;
           }
 
+          img {
+            vertical-align: bottom;
+            height: 0.8rem;
+          }
+
           p {
             max-width: 70%;
             margin: 0;
@@ -161,11 +166,18 @@ body {
             }
             font-size: 0.7rem;
             border-radius: 1rem;
-          }
 
-          img {
-            vertical-align: bottom;
-            height: 0.8rem;
+            &.user-text {
+              float: right;
+              color: #3260ad;
+              background-color: #e4fbcf;
+            }
+
+            &.bot-text {
+              float: left;
+              color: #000;
+              background-color: #fff;
+            }
           }
 
           &.user-message {
@@ -173,22 +185,9 @@ body {
             background-size: .8rem;
           }
 
-          p.user-text {
-            float: right;
-            color: #3260ad;
-            background-color: #e4fbcf;
-            
-          }
-
           &.bot-message {
             background: url('../img/bot-message-angle.png') 3% 97% no-repeat;
             background-size: .8rem;
-          }
-
-          p.bot-text {
-            float: left;
-            color: #000;
-            background-color: #fff;
           }
         }
       }

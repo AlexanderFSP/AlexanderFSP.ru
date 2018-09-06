@@ -54,7 +54,6 @@
       $(article).removeClass('animated fadeInUp faster');
       $('article').css('transition', 'none');
       $('article:first-of-type').css('margin-top', '2%');
-      $('#text-message').val('');
       $(article).get(0).scrollIntoView({
         block: 'end',
         behavior: 'smooth'
@@ -72,20 +71,21 @@
 
 
   $(function () {
-    var BOT_ANSWER_DELAY = 800;
+    var BOT_ANSWER_DELAY = 800; // Ввод '/start' в input#text-message (имитация запуска бота через 1 сек. после подгрузки документа)...
 
-    (function printLetters(chars) {
+    setTimeout(function printLetters(chars) {
       document.getElementById('text-message').value += chars.shift();
 
       if (chars.length) {
         setTimeout(printLetters, 200, chars);
+      } else {
+        $('#text-message').val('');
       }
-    })('/start'.split(''));
+    }, 1000, '/start'.split('')); //  Убираем disabled-эффект, отображение сообщения и навигационных кнопок бота...
 
     setTimeout(function () {
       $("#text-message").prop('disabled', false);
       $('.top-tg-bar__back').removeClass('disabled');
-      $('#text-message').val('');
       var article = document.createElement('article');
       article.innerHTML = '<p class="user-text">/start</p><div style="clear:both"></div>';
       $('#chat').append(article);
@@ -97,10 +97,11 @@
       $('article:first-of-type').css('margin-top', top + '%');
       setTimeout(function () {
         $('footer>nav>ul>li').addClass('animated jackInTheBox fast');
-        $('footer>nav>ul>li').css('display', 'block');
+        $('footer>nav>ul>li').css('display', 'block'); // Приветственное сообщение...
+
         postMessage('bot-text', 'Погоди-ка...');
       }, BOT_ANSWER_DELAY);
-    }, 1800);
+    }, 2200);
     /**
      *  Запрос на получение информации обо мне
      */
