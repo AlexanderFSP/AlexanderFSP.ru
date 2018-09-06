@@ -32,10 +32,17 @@
   var top = 138;
 
   function postMessage(className, message) {
-    var article = document.createElement('article');
+    var article = document.createElement('article'),
+        articleClassName = className === 'user-text' ? 'user-message' : 'bot-message';
     article.innerHTML = "<p class=\"" + className + "\">" + message + "</p><div style=\"clear:both\"></div>";
     $(article).addClass('animated fadeInUp faster');
     $('#chat').append(article);
+    $(article).addClass(articleClassName); // Удаление уголочка предыдущего сообщения, если сообщение от того же адресата...
+
+    if ($(article).prev().attr('class').includes(articleClassName)) {
+      $(article).prev().removeClass(articleClassName);
+    }
+
     var articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000,
         mainHeight = Math.round(parseFloat($('#chat').outerHeight()) * 1000) / 1000,
         percent = articleHeight / mainHeight * 100 * 1.431;
@@ -47,6 +54,7 @@
       $(article).removeClass('animated fadeInUp faster');
       $('article').css('transition', 'none');
       $('article:first-of-type').css('margin-top', '2%');
+      $('#text-message').val('');
       $(article).get(0).scrollIntoView({
         block: 'end',
         behavior: 'smooth'
@@ -56,7 +64,7 @@
     $('footer>nav>ul>li').css('pointer-events', 'none');
     setTimeout(function () {
       $('footer>nav>ul>li').css('pointer-events', 'auto');
-    }, 500);
+    }, 300);
   }
   /**
    *  Инициализация бота: отправка сообщения '/start', отображение навигации бота
@@ -64,6 +72,8 @@
 
 
   $(function () {
+    var BOT_ANSWER_DELAY = 800;
+
     (function printLetters(chars) {
       document.getElementById('text-message').value += chars.shift();
 
@@ -75,10 +85,11 @@
     setTimeout(function () {
       $("#text-message").prop('disabled', false);
       $('.top-tg-bar__back').removeClass('disabled');
-      document.getElementById('text-message').value = '';
+      $('#text-message').val('');
       var article = document.createElement('article');
       article.innerHTML = '<p class="user-text">/start</p><div style="clear:both"></div>';
       $('#chat').append(article);
+      $(article).addClass('user-message');
       var articleHeight = parseFloat($('article:first-of-type').height()),
           mainHeight = parseFloat($('#chat').outerHeight()),
           percent = articleHeight / mainHeight * 100;
@@ -88,7 +99,7 @@
         $('footer>nav>ul>li').addClass('animated jackInTheBox fast');
         $('footer>nav>ul>li').css('display', 'block');
         postMessage('bot-text', 'Погоди-ка...');
-      }, 800);
+      }, BOT_ANSWER_DELAY);
     }, 1800);
     /**
      *  Запрос на получение информации обо мне
@@ -99,7 +110,18 @@
       postMessage('user-text', 'Расскажи-ка о себе <img src="../img/thinking-face.png";">');
       setTimeout(function () {
         postMessage('bot-text', 'Погоди-ка...');
-      }, 800);
+      }, BOT_ANSWER_DELAY);
+    });
+    /**
+     *  Запрос на получение моего портфолио
+     */
+
+    $('li#portfolio').on('click', function () {
+      $('article').css('transition', 'all 0.1s linear');
+      postMessage('user-text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae similique laudantium modi repudiandae, architecto harum. Harum quas error obcaecati accusamus nesciunt enim itaque officiis sed ipsam, aliquam commodi quis totam.');
+      setTimeout(function () {
+        postMessage('bot-text', 'Погоди-ка...');
+      }, BOT_ANSWER_DELAY);
     });
   });
 }(jQuery);

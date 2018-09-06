@@ -1,11 +1,6 @@
 @import url('normalize.css');
 @import url('animate.css');
 
-@mixin bgli($url, $left, $top) {
-  background-image: url($url);
-  background-position: $left $top;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -19,29 +14,30 @@ html {
 }
 
 body {
-  background: url('../img/telegram-hex-colors-gradient-background.png');
-  background-repeat: no-repeat;
+  background: url('../img/telegram-hex-colors-gradient-background.png') no-repeat;
   background-size: cover;
-
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
 
 .wrapper {
-  height: 95vh;
-  width: 47.38vh;
   position: relative;
+  width: 47.38vh;
+  height: 95vh;
   margin: 2.5vh auto;
 
     .display {
-      height: 100%;
-      width: 100%;
-      padding: 6% 6.14% 6% 6.54%;
       position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: {
+        top: 6%;
+        right: 6.14%;
+        bottom: 6%;
+        left: 6.54%;
+      }
       z-index: 10;
-      background-image: url('../img/iphonex.png');
-      background-repeat: no-repeat;
-      background-position: center;
+      background: url('../img/iphonex.png') no-repeat;
       background-size: cover;
 
       @media only screen and (min-width: 1440px) and (max-width: 2559px) {
@@ -49,8 +45,8 @@ body {
       }
 
       header {
-        height: 10%;
         width: 100%;
+        height: 10%;
 
         .status-bar {
           height: 42%;
@@ -60,27 +56,25 @@ body {
           .status-bar__time {
             float: left;
             width: 22%;
-            padding-top: 3.5%;
-            padding-left: 6.5%;
-            background-image: url('../img/location.png');
-            background-repeat: no-repeat;
-            background-position:-9999px;
+            padding: {
+              top: 3.5%;
+              left: 6.5%;
+            }
+            background: url('../img/location.png') -9999px -9999px no-repeat;
             background-size: 0.40rem;
           }
           .status-bar__battery {
             float: right;
             width: 22%;
             height: 100%;
-            background-image: url('../img/icons.png');
-            background-repeat: no-repeat;
-            background-position: 6% 67%;
+            background: url('../img/icons.png') 6% 67% no-repeat;
             background-size: auto 0.53rem;
           }
         }
         
         .top-tg-bar {
-          height: 58%;
           width: 98.7%;
+          height: 58%;
           margin-left: .8%;
 
           .top-tg-bar__back {
@@ -92,11 +86,10 @@ body {
             a {
               display: block;
               height: 100%;
-              padding: 14.5% 28%;
+              padding: 16.2% 25.4%;
+              padding-bottom: 40%;
               color: #117ce6;
-              background-image: url('../img/angle-left.png');
-              background-repeat: no-repeat;
-              background-position: 6% center;
+              background: url('../img/angle-left.png') 10% 30% no-repeat;
               background-size: 1rem;
             }
           }
@@ -129,21 +122,16 @@ body {
             float: left;
             width: 25%;
             height: 100%;
-
-            background-image: url('../img/chat-image.png');
-            background-repeat: no-repeat;
-            background-position: 90% 40%;
+            background: url('../img/chat-image.png') 90% 40% no-repeat;
             background-size: 1.6rem;
           }
         }
       }
 
       main#chat {
-        height: 66%;
         width: 99.46%;
-        background-image: url('../img/chat-background.jpg');
-        background-repeat: no-repeat;
-        background-position: center center;
+        height: 66%;
+        background: url('../img/chat-background.jpg') center center no-repeat;
         background-size: cover;
         overflow: scroll;
         border-top: 0.01rem solid lightgray;
@@ -156,18 +144,14 @@ body {
         }
 
         article {
-          margin-right: 0.7rem;
-          margin-left: 0.7rem;
-          padding-bottom: 1%;
+          padding: {
+            right: 0.6rem;
+            bottom: 2%;
+            left: 0.6rem;
+          }
 
-          p.user-text {
-            float: right;
+          p {
             max-width: 70%;
-            font-size: 0.7rem;
-            color: #3260ad;
-            background-color: #e4fbcf;
-            border-radius: 1rem;
-            border: 0.03rem solid #d4d9df;
             margin: 0;
             padding: {
               top: 1.9%;
@@ -175,35 +159,43 @@ body {
               bottom: 1.6%;
               left: 4%;
             }
+            font-size: 0.7rem;
+            border-radius: 1rem;
+          }
 
-            img {
-              vertical-align: bottom;
-              height: 0.8rem;
-            }
+          img {
+            vertical-align: bottom;
+            height: 0.8rem;
+          }
+
+          &.user-message {
+            background: url('../img/user-message-angle.png') 97% 97% no-repeat;
+            background-size: .8rem;
+          }
+
+          p.user-text {
+            float: right;
+            color: #3260ad;
+            background-color: #e4fbcf;
+            
+          }
+
+          &.bot-message {
+            background: url('../img/bot-message-angle.png') 3% 97% no-repeat;
+            background-size: .8rem;
           }
 
           p.bot-text {
             float: left;
-            max-width: 70%;
-            font-size: 0.7rem;
             color: #000;
             background-color: #fff;
-            border-radius: 1rem;
-            border: 0.03rem solid #d4d9df;
-            margin: 0;
-            padding: {
-              top: 1.9%;
-              right: 10%;
-              bottom: 1.6%;
-              left: 4%;
-            }
           }
         }
       }
 
       footer {
         height: 24%;
-        width: 99.4%;
+        width: 99.46%;
 
         @media only screen and (min-width: 1440px) {
           width: 99.6%;
@@ -214,17 +206,17 @@ body {
 
         .input-field {
           height: 21%;
-          border-top: 0.01rem solid lightgray;
-          border-bottom: 0.01rem solid lightgray;
+          border: {
+            top: 0.01rem solid lightgray;
+            bottom: 0.01rem solid lightgray;
+          }
           background: #fafafa;
 
           .input-field__media {
             float: left;
             width: 11%;
             height: 100%;
-            background-image: url('../img/attach-icon.png');
-            background-repeat: no-repeat;
-            background-position: center center;
+            background: url('../img/attach-icon.png') center center no-repeat;
             background-size: 1rem;
           }
 
@@ -233,25 +225,21 @@ body {
             width: 78%;
             
             #text-message {
-              margin-top: 3%;
-              font-size: 0.6rem;
-              font-weight: 300;
               width: 100%;
-              border: 0px;
-              border: none transparent;
-              outline: none;
+              margin-top: 3%;
               padding: {
                 top: 1.5%;
                 right: 13%;
                 bottom:  1.5%;
                 left: 3%;
               }
+              font-size: 0.6rem;
+              font-weight: 300;
+              outline: none;
+              border: none transparent;
               border-radius: 0.5rem;
               box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
-
-              background-image: url('../img/rounded-rectangle-stroked1.png');
-              background-repeat: no-repeat;
-              background-position: 96% 100%;
+              background: url('../img/rounded-rectangle-stroked1.png') 96% 100% no-repeat;
               background-size: 1.1rem;
             }
           }
@@ -260,9 +248,7 @@ body {
             float: left;
             width: 11%;
             height: 100%;
-            background-image: url('../img/microphone.png');
-            background-repeat: no-repeat;
-            background-position: center center;
+            background: url('../img/microphone.png') center center no-repeat;
             background-size: 1rem;
           }
         }
@@ -274,26 +260,23 @@ body {
           border-bottom-left-radius: 1.7rem;
 
           ul {
-            list-style-type: none;
             margin: 0;
             padding: 0;
+            list-style-type: none;
 
             li {
               float: left;
               width: 46%;
+              margin: 2.25% 2%;
               padding: {
                 top: 5%;
                 bottom: 5%;
                 right: 0.75rem;
               }
-              margin: 2.25% 2%;
               text-align: center;
               font-size: 0.65rem;
-              background: #fafafa;
               border-radius: 0.3rem;
               box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
-              background-repeat: no-repeat;
-              background-size: 0.65rem;
               display: none;
               
               &:hover {
@@ -301,19 +284,23 @@ body {
               }
 
               &:first-child {
-                @include bgli('../img/waving-hand.png', 71%, 44%);
+                background: #fafafa url('../img/waving-hand.png') 71% 44% no-repeat;
+                background-size: 0.65rem;
               }
 
               &:nth-child(2) {
-                @include bgli('../img/briefcase.png', 78%, 44%);
+                background: #fafafa url('../img/briefcase.png') 78% 44% no-repeat;
+                background-size: 0.65rem;
               }
 
               &:nth-child(3) {
-                @include bgli('../img/programmer.png', 94%, 44%);
+                background: #fafafa url('../img/programmer.png') 94% 44% no-repeat;
+                background-size: 0.65rem;
               }
 
               &:last-child {
-                @include bgli('../img/incoming-envelope.png', 74%, 44%);
+                background: #fafafa url('../img/incoming-envelope.png') 74% 44% no-repeat;
+                background-size: 0.65rem;
               }
             }
           }
@@ -322,10 +309,10 @@ body {
     }
 
     .screen-bg {
-      height: 95%;
-      width: 87%;
-      background: #f7f7f7;
-      margin: 6% 6.5%;
       position: absolute;
+      width: 87%;
+      height: 95%;
+      margin: 6% 6.5%;
+      background: #f7f7f7;
     }
 }
