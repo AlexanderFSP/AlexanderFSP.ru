@@ -34,13 +34,13 @@
   function postMessage(className, message) {
     var article = document.createElement('article'),
         articleClassName = className === 'user-text' ? 'user-message' : 'bot-message';
-    article.innerHTML = "<p class=\"" + className + "\">" + message + "</p><div style=\"clear:both\"></div>";
+    article.innerHTML = "<section class=\"content\">\n                           <p class=\"message-text\">" + message + "</p>\n                           <footer class=\"message-info sent\">" + (("0" + new Date().getHours()).slice(-2) + ':' + ("0" + new Date().getMinutes()).slice(-2)) + "</footer>\n                          </section>\n                          <div style=\"clear:both\"></div>";
     $(article).addClass('animated fadeInUp faster');
-    $('#chat').append(article);
-    $(article).addClass(articleClassName); // Удаление уголочка предыдущего сообщения, если сообщение от того же адресата...
+    $(article).addClass(articleClassName);
+    $('#chat').append(article); // Удаление уголочка предыдущего сообщения, если сообщение от того же адресата...
 
     if ($(article).prev().attr('class').includes(articleClassName)) {
-      $(article).prev().removeClass(articleClassName);
+      $(article).prev().css('background', 'none');
     }
 
     var articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000,
@@ -51,7 +51,7 @@
     if (top > 0) {
       $('article:first-of-type').css('margin-top', top + '%');
     } else {
-      $(article).removeClass('animated fadeInUp faster');
+      $('article').removeClass('animated fadeInUp faster');
       $('article').css('transition', 'none');
       $('article:first-of-type').css('margin-top', '2%');
       $(article).get(0).scrollIntoView({
@@ -62,8 +62,10 @@
 
     $('footer>nav>ul>li').css('pointer-events', 'none');
     setTimeout(function () {
+      $(article).find('footer').removeClass('sent');
+      $(article).find('footer').addClass('read');
       $('footer>nav>ul>li').css('pointer-events', 'auto');
-    }, 300);
+    }, 500);
   }
   /**
    *  Инициализация бота: отправка сообщения '/start', отображение навигации бота
@@ -87,17 +89,23 @@
       $("#text-message").prop('disabled', false);
       $('.top-tg-bar__back').removeClass('disabled');
       var article = document.createElement('article');
-      article.innerHTML = '<p class="user-text">/start</p><div style="clear:both"></div>';
-      $('#chat').append(article);
+      article.innerHTML = "\n        <section class=\"content\">\n          <p class=\"message-text\">/start_bot</p>\n          <footer class=\"message-info sent\">" + (("0" + new Date().getHours()).slice(-2) + ':' + ("0" + new Date().getMinutes()).slice(-2)) + "</footer>\n        </section>\n        <div style=\"clear:both\"></div>";
+      $(article).addClass('animated fadeInUp faster');
       $(article).addClass('user-message');
+      $('#chat').append(article);
       var articleHeight = parseFloat($('article:first-of-type').height()),
           mainHeight = parseFloat($('#chat').outerHeight()),
           percent = articleHeight / mainHeight * 100;
       top -= percent;
       $('article:first-of-type').css('margin-top', top + '%');
       setTimeout(function () {
+        $(article).find('footer').removeClass('sent');
+        $(article).find('footer').addClass('read');
+      }, 500);
+      setTimeout(function () {
         $('footer>nav>ul>li').addClass('animated jackInTheBox fast');
-        $('footer>nav>ul>li').css('display', 'block'); // Приветственное сообщение...
+        $('footer>nav>ul>li').css('display', 'block');
+        $('article').css('transition', 'all 0.1s linear'); // Приветственное сообщение...
 
         postMessage('bot-text', 'Погоди-ка...');
       }, BOT_ANSWER_DELAY);
@@ -107,7 +115,6 @@
      */
 
     $('li#about-me').on('click', function () {
-      $('article').css('transition', 'all 0.1s linear');
       postMessage('user-text', 'Расскажи-ка о себе <img src="../img/thinking-face.png";">');
       setTimeout(function () {
         postMessage('bot-text', 'Погоди-ка...');
@@ -118,7 +125,6 @@
      */
 
     $('li#portfolio').on('click', function () {
-      $('article').css('transition', 'all 0.1s linear');
       postMessage('user-text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae similique laudantium modi repudiandae, architecto harum. Harum quas error obcaecati accusamus nesciunt enim itaque officiis sed ipsam, aliquam commodi quis totam.');
       setTimeout(function () {
         postMessage('bot-text', 'Погоди-ка...');

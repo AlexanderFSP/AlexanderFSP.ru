@@ -149,45 +149,88 @@ body {
             bottom: 2%;
             left: 0.6rem;
           }
+          width: 100%;
 
           img {
             vertical-align: bottom;
             height: 0.8rem;
           }
 
-          p {
+          section.content {
             max-width: 70%;
             margin: 0;
             padding: {
-              top: 1.9%;
-              right: 10%;
-              bottom: 1.6%;
-              left: 4%;
+              top: 1.4%;
+              bottom: 1.3%;
+              left: 3%;
             }
             font-size: 0.7rem;
             border-radius: 1rem;
+          }
 
-            &.user-text {
-              float: right;
-              color: #3260ad;
-              background-color: #e4fbcf;
-            }
+          p.message-text {
+            margin: 0;
+            padding-right: 2.5rem;
+            word-wrap: break-word;
+          }
 
-            &.bot-text {
-              float: left;
-              color: #000;
-              background-color: #fff;
-            }
+          footer.message-info {
+            font-size: 0.5rem;
+            text-align: right;
+            margin-top: -0.44rem;
+            padding-right: 0.3rem;
+            font-style: italic;
+            padding-right: .95rem;
           }
 
           &.user-message {
             background: url('../img/user-message-angle.png') 97% 97% no-repeat;
             background-size: .8rem;
+
+            section.content {
+              float: right;
+              color: #3260ad;
+              background-color: #e1ffc7;
+            }
+
+            footer.message-info {
+              color: #41ad40;
+
+              &.sent {
+                background: url('../img/user-single-check-mark.png') 95% 40% no-repeat;
+                background-size: 0.4rem;
+              }
+
+              &.read {
+                background: url('../img/user-double-check-marks.png') 97% 40% no-repeat;
+                background-size: 0.6rem;
+              }
+            }
           }
 
           &.bot-message {
             background: url('../img/bot-message-angle.png') 3% 97% no-repeat;
             background-size: .8rem;
+
+            section.content {
+              float: left;
+              color: #000;
+              background-color: #fff;
+            }
+
+            footer.message-info {
+              color: #c1c0bb;
+
+              &.sent {
+                background: url('../img/bot-single-check-mark.png') 93% 40% no-repeat;
+                background-size: 0.4rem;
+              }
+
+              &.read {
+                background: url('../img/bot-double-check-marks.png') 95% 40% no-repeat;
+                background-size: 0.6rem;
+              }
+            }
           }
         }
       }

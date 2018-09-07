@@ -77,6 +77,9 @@ gulp.task('scss:build', function() {
               cascade: false
             }))
             .pipe(cssmin())
+            .pipe(rename({
+              suffix: ".min"
+            }))
             .pipe(gulp.dest(path.build.css))
             .pipe(notify('Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css'))
             .pipe(reload({stream: true}));

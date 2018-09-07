@@ -32,14 +32,18 @@
   function postMessage(className, message) {
     const article = document.createElement('article'),
           articleClassName = (className === 'user-text') ? 'user-message' : 'bot-message';
-    article.innerHTML = `<p class="${className}">${message}</p><div style="clear:both"></div>`;
+    article.innerHTML = `<section class="content">
+                           <p class="message-text">${message}</p>
+                           <footer class="message-info sent">${("0" + new Date().getHours()).slice(-2) + ':' + ("0" + new Date().getMinutes()).slice(-2)}</footer>
+                          </section>
+                          <div style="clear:both"></div>`;
     $(article).addClass('animated fadeInUp faster');
-    $('#chat').append(article);
     $(article).addClass(articleClassName);
+    $('#chat').append(article);
 
     // Удаление уголочка предыдущего сообщения, если сообщение от того же адресата...
     if ($(article).prev().attr('class').includes(articleClassName)) {
-      $(article).prev().removeClass(articleClassName);
+      $(article).prev().css('background', 'none');
     }
 
     const articleHeight = Math.round(parseFloat($(article).outerHeight(true)) * 1000) / 1000,
@@ -50,16 +54,19 @@
     if (top > 0) {
       $('article:first-of-type').css('margin-top', top + '%');
     } else {
-      $(article).removeClass('animated fadeInUp faster');
+      $('article').removeClass('animated fadeInUp faster');
       $('article').css('transition', 'none');
       $('article:first-of-type').css('margin-top', '2%');
+
       $(article).get(0).scrollIntoView({ block: 'end',  behavior: 'smooth' });
     }
 
     $('footer>nav>ul>li').css('pointer-events', 'none');
     setTimeout(function() {
+      $(article).find('footer').removeClass('sent');
+      $(article).find('footer').addClass('read');
       $('footer>nav>ul>li').css('pointer-events', 'auto');
-    }, 300);
+    }, 500);
   }
 
   /**
@@ -84,9 +91,15 @@
       $('.top-tg-bar__back').removeClass('disabled');
 
       const article = document.createElement('article');
-      article.innerHTML = '<p class="user-text">/start</p><div style="clear:both"></div>';
-      $('#chat').append(article);
+      article.innerHTML = `
+        <section class="content">
+          <p class="message-text">/start_bot</p>
+          <footer class="message-info sent">${("0" + new Date().getHours()).slice(-2) + ':' + ("0" + new Date().getMinutes()).slice(-2)}</footer>
+        </section>
+        <div style="clear:both"></div>`;
+      $(article).addClass('animated fadeInUp faster');
       $(article).addClass('user-message');
+      $('#chat').append(article);
 
       const articleHeight = parseFloat($('article:first-of-type').height()),
             mainHeight    = parseFloat($('#chat').outerHeight()),
@@ -95,8 +108,14 @@
       $('article:first-of-type').css('margin-top', top + '%');
 
       setTimeout(function() {
+        $(article).find('footer').removeClass('sent');
+        $(article).find('footer').addClass('read');
+      }, 500);
+
+      setTimeout(function() {
         $('footer>nav>ul>li').addClass('animated jackInTheBox fast');
         $('footer>nav>ul>li').css('display', 'block');
+        $('article').css('transition', 'all 0.1s linear');
         // Приветственное сообщение...
         postMessage('bot-text', 'Погоди-ка...');
       }, BOT_ANSWER_DELAY);
@@ -106,7 +125,6 @@
      *  Запрос на получение информации обо мне
      */
     $('li#about-me').on('click', function() {
-      $('article').css('transition', 'all 0.1s linear');
       postMessage('user-text', 'Расскажи-ка о себе <img src="../img/thinking-face.png";">');
       setTimeout(function() {
         postMessage('bot-text', 'Погоди-ка...');
@@ -117,7 +135,6 @@
      *  Запрос на получение моего портфолио
      */
     $('li#portfolio').on('click', function() {
-      $('article').css('transition', 'all 0.1s linear');
       postMessage('user-text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae similique laudantium modi repudiandae, architecto harum. Harum quas error obcaecati accusamus nesciunt enim itaque officiis sed ipsam, aliquam commodi quis totam.');
       setTimeout(function() {
         postMessage('bot-text', 'Погоди-ка...');
