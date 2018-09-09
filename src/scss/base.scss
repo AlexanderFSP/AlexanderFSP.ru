@@ -10,14 +10,45 @@ a {
 }
 
 html {
-  font-size: 2.5vh;
+  font-size: 2.6vh;
 }
 
 body {
-  background: url('../img/background.png') no-repeat;
+  background: url('../img/background.jpg') no-repeat;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+}
+
+img {
+  vertical-align: -0.08rem;
+    height: 0.7rem;
+}
+
+::-webkit-scrollbar {
+  width: .2rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: .9rem;
+}
+
+::-webkit-scrollbar-thumb {
+  opacity: 0.1;
+  border-radius: 0.9rem;
+  background: rgba(0,0,0,0.5); 
+  box-shadow: inset 0 0 0.5rem rgba(0,0,0,0.5); 
+}
+
+.preloader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background: url('../img/loading.gif') center no-repeat #fff;
+    text-align: center;
 }
 
 .wrapper {
@@ -25,6 +56,7 @@ body {
   width: 47.38vh;
   height: 95vh;
   margin: 2.5vh auto;
+  visibility: hidden;
 
     .display {
       position: absolute;
@@ -94,10 +126,6 @@ body {
             }
           }
 
-          .disabled {
-            pointer-events: none;
-          }
-
           .top-tg-bar__chat-name {
             float: left;
             width: 50%;
@@ -130,11 +158,12 @@ body {
 
       main#chat {
         width: 99.46%;
-        height: 66%;
+        height: 78%;
         background: url('../img/chat-background.jpg') center center no-repeat;
         background-size: cover;
-        overflow: scroll;
+        overflow: hidden;
         border-top: 0.01rem solid lightgray;
+        color: #000;
 
         @media only screen and (min-width: 1440px) {
           width: 99.6%;
@@ -143,100 +172,104 @@ body {
           width: 99.55%;
         }
 
+        .start-message {
+          background: #fff;
+          width: 60%;
+          padding: 0.01rem 0.6rem;
+          margin: 0 auto;
+          margin-top: 65%;
+          font-size: 0.65rem;
+          border-radius: 0.3rem;
+          box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
+          transition: .04s ease-in;
+        }
+
         article {
           padding: {
             right: 0.6rem;
             bottom: 2%;
             left: 0.6rem;
           }
-          width: 100%;
-
-          img {
-            vertical-align: bottom;
-            height: 0.8rem;
-          }
+          width: 70%;
+          position: relative;
 
           section.content {
-            max-width: 70%;
             margin: 0;
             padding: {
-              top: 1.4%;
-              bottom: 1.3%;
-              left: 3%;
+              top: 0.3rem;
+              bottom: 0.2rem;
+              left: 0.5rem;
             }
-            font-size: 0.7rem;
-            border-radius: 1rem;
+            font-size: 0.6rem;
+            border-radius: .8rem;
           }
 
           p.message-text {
             margin: 0;
-            padding-right: 2.5rem;
+            padding-right: 2.2rem;
             word-wrap: break-word;
+            line-height: 1rem;
           }
 
-          footer.message-info {
-            font-size: 0.5rem;
-            text-align: right;
-            margin-top: -0.44rem;
-            padding-right: 0.3rem;
+          span.message-info {
+            position: absolute;
+            font-size: 0.4rem;
             font-style: italic;
-            padding-right: .95rem;
+            font-weight: 300;
+            bottom: 0.47rem;
           }
 
           &.user-message {
-            background: url('../img/user-message-angle.png') 97% 97% no-repeat;
-            background-size: .8rem;
+            background: url('../img/user-message-angle.png') 97.2% 98% no-repeat;
+            background-size: 1rem;
+            float: right;
 
             section.content {
               float: right;
-              color: #3260ad;
               background-color: #e1ffc7;
             }
 
-            footer.message-info {
+            span.message-info {
               color: #41ad40;
+              left: 78%;
+              padding-right: .6rem;
 
               &.sent {
-                background: url('../img/user-single-check-mark.png') 95% 40% no-repeat;
-                background-size: 0.4rem;
+                background: url('../img/user-single-check-mark.png') 99% 40% no-repeat;
+                background-size: 0.55rem;
               }
 
               &.read {
-                background: url('../img/user-double-check-marks.png') 97% 40% no-repeat;
-                background-size: 0.6rem;
+                background: url('../img/user-double-check-marks.png') 99% 40% no-repeat;
+                background-size: 0.55rem;
               }
             }
           }
 
           &.bot-message {
-            background: url('../img/bot-message-angle.png') 3% 97% no-repeat;
+            background: url('../img/bot-message-angle.png') 3.8% 98% no-repeat;
             background-size: .8rem;
+            float: left;
 
             section.content {
               float: left;
-              color: #000;
               background-color: #fff;
+
+              p {
+                padding-right: 1rem;
+
+              }
             }
 
-            footer.message-info {
+            span.message-info {
               color: #c1c0bb;
-
-              &.sent {
-                background: url('../img/bot-single-check-mark.png') 93% 40% no-repeat;
-                background-size: 0.4rem;
-              }
-
-              &.read {
-                background: url('../img/bot-double-check-marks.png') 95% 40% no-repeat;
-                background-size: 0.6rem;
-              }
             }
           }
         }
       }
 
       footer {
-        height: 24%;
+        height: 12%;
         width: 99.46%;
 
         @media only screen and (min-width: 1440px) {
@@ -247,7 +280,7 @@ body {
         }
 
         .input-field {
-          height: 21%;
+          height: 44%;
           border: {
             top: 0.01rem solid lightgray;
             bottom: 0.01rem solid lightgray;
@@ -296,7 +329,7 @@ body {
         }
 
         nav {
-          height: 79%;
+          height: 56%;
           background: #ebece7;
           border-bottom-right-radius: 1.7rem;
           border-bottom-left-radius: 1.7rem;
@@ -308,34 +341,53 @@ body {
 
             li {
               float: left;
-              width: 46%;
-              margin: 2.25% 2%;
+              width: 45%;
+              margin: 2.25% 2.5%;
               padding: {
-                top: 5%;
-                bottom: 5%;
+                top: 4.5%;
+                bottom: 4.5%;
                 right: 0.75rem;
               }
               text-align: center;
               font-size: 0.65rem;
               border-radius: 0.3rem;
               box-shadow: 0.03rem 0.03rem 0.1rem 0rem lightgray;
+              transition: .04s ease-in;
               display: none;
+              cursor: pointer;
+            
+              &#start-bot {
+                width: 94%;
+                background: #fafafa;
+                color: #3260ad;
+                display: block;
+                margin: 0;
+                margin-top: 2.1%;
+                margin-left: 3%;
+                padding: {
+                  top: 2.5%;
+                  bottom: 2.5%;
+                  right: 0.75rem;
+                }
+                border-bottom-right-radius: 1.7rem;
+                border-bottom-left-radius: 1.7rem;
+              }
               
               &:hover {
                 box-shadow: 0.08rem 0.08rem 0.4rem 0rem lightgray;
               }
 
-              &:first-child {
+              &:nth-child(2) {
                 background: #fafafa url('../img/waving-hand.png') 71% 44% no-repeat;
                 background-size: 0.65rem;
               }
 
-              &:nth-child(2) {
+              &:nth-child(3) {
                 background: #fafafa url('../img/briefcase.png') 78% 44% no-repeat;
                 background-size: 0.65rem;
               }
 
-              &:nth-child(3) {
+              &:nth-child(4) {
                 background: #fafafa url('../img/programmer.png') 94% 44% no-repeat;
                 background-size: 0.65rem;
               }

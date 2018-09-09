@@ -31,20 +31,25 @@ const path = {
     html: './src/*.html',
     scss: './src/scss/**/*.scss',
     js: {
-      base: './src/js/script.js',
-      baseTranspiled: './src/js/transpiled-script.js',
-      jQuery: './src/js/jquery-3.3.1.min.js'
+      base:           './src/js/script.js',
+      baseTranspiled: './src/js/_script.js',
+      jQuery:         './src/js/jquery-3.3.1.min.js'
     },
     img:  './src/img/**/*.*'
   },
-  clean: './build/**/*.*'
+  clean: {
+    html: './build/*.html',
+    css:  './build/css/**/*.*',
+    js:   './build/js/**/*.*',
+    img:  './build/img/**/*.*'
+  }
 };
 
 /**
  *  Очистка сборочной директории
  */
 gulp.task('clean', function(cb) {
-  del(path.clean).then(paths => {
+  del([path.clean.html, path.clean.css, path.clean.js, path.clean.img]).then(paths => {
     console.log('Deleted files and folders:\n', paths.join('\n'));
     notify('Очистка сборочной директории');
     cb();
@@ -98,7 +103,7 @@ gulp.task('js:transpile', function() {
               gutil.log(gutil.colors.red('[Compilation Error]'));
               gutil.log(gutil.colors.red(err.message));
             })
-            .pipe(rename('transpiled-script.js'))
+            .pipe(rename('_script.js'))
             .pipe(gulp.dest('./src/js/'))
             .pipe(notify('Транспиляция JS в ES5'));
 });
@@ -119,9 +124,19 @@ gulp.task('js:concat', function() {
 });
 
 /**
+ * Удаление транспилированного JS, после сборки и переноса всех скриптов в path.build.js
+ */
+gulp.task('js:clean', function(cb) {
+  del(path.src.js.baseTranspiled).then(() => {
+    console.log('Deleted file: _script.js');
+    cb();
+  });
+});
+
+/**
  *  Сборка скриптов
  */
-gulp.task('js:build', gulp.series('js:transpile', 'js:concat'));
+gulp.task('js:build', gulp.series('js:transpile', 'js:concat', 'js:clean'));
 
 /**
  *  Оптимизация изображений и перенос в path.build.img

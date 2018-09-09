@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="Personal website 👨🏻‍💻🌏">
+  <link rel="icon" type="image/png" href="./img/favicon.png">
 
-  <title>AlexanderFSP.ru</title>
+  <title>AlexanderFSP</title>
 
   <!-- Custom stylesheets -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/base.min.css">
 
   <!--[if lt IE 9]>
@@ -23,6 +25,8 @@
   <![endif]-->
 </head>
 <body>
+  <div class="preloader"></div>
+
   <div class="wrapper">
     <div class="display">
       <header>
@@ -33,7 +37,7 @@
           <div class="status-bar__battery"></div>
         </section>
         <section class="top-tg-bar">
-          <div class="top-tg-bar__back disabled">
+          <div class="top-tg-bar__back">
             <a href="#">Chats</a>
           </div>
           <div class="top-tg-bar__chat-name">
@@ -44,7 +48,9 @@
       </header>
 
       <main id="chat">
-        
+        <div class="start-message">
+          <p><strong>What can this bot do?</strong><br><br>Этот бот поможет вам узнать всю нужную информацию обо мне. Нажмите кнопку &laquo;START&raquo; ниже, чтобы запустить его.</p>
+        </div>
       </main>
 
       <footer>
@@ -54,11 +60,12 @@
             <input type="text" name="text-message" id="text-message" placeholder="Message" disabled>
           </div>
           <div class="input-field__voice">
-
+            
           </div>
         </div>
         <nav>
           <ul>
+            <li id="start-bot">START</li>
             <li id="about-me">Обо мне</li>
             <li id="portfolio">Портфолио</li>
             <li id="offer-me">Предложить заказ</li>
@@ -70,6 +77,9 @@
     <div class="screen-bg"></div>
   </div>
 
+  <!-- Audio notifications -->
+  <audio id="user-sound" src="./sounds/sound_out.wav" preload="auto"></audio>
+  <audio id="bot-sound" src="./sounds/sound_in.wav" preload="auto"></audio>
   <!-- JavaScript -->
   <script src="./js/scripts.min.js"></script>
 </body>
