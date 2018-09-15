@@ -355,6 +355,10 @@ img {
               transition: .04s ease-in;
               display: none;
               cursor: pointer;
+
+              &::selection {
+                user-select: none; 
+              }
             
               &#start-bot {
                 width: 94%;
