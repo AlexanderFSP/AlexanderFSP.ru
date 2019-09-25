@@ -15,38 +15,36 @@ const gulp         = require('gulp'),
       babel        = require('gulp-babel'),
       rename       = require('gulp-rename'),
       concat       = require('gulp-concat'),
-      uglify       = require('gulp-uglify');
+      uglify       = require('gulp-uglify'),
+      newer        = require('gulp-newer');
 
 const path = {
   build: {
     html: './build/',
     css: './build/css/',
-    js:  './build/js/',
-    img: './build/img/'
+    js: './build/js/',
+    img: './build/img/',
+    sounds: './build/sounds/',
   },
   src: {
     html: './src/*.html',
     scss: './src/scss/**/*.scss',
     js: {
-      base:           './src/js/script.js',
+      base: './src/js/script.js',
       baseTranspiled: './src/js/_script.js',
-      jQuery:         './src/js/jquery-3.3.1.min.js'
+      jQuery: './src/js/jquery-3.3.1.min.js',
     },
-    img:  './src/img/**/*.*'
+    img: './src/img/**/*.*',
+    sounds: './src/sounds/*.wav',
   },
-  clean: {
-    html: './build/*.html',
-    css:  './build/css/**/*.*',
-    js:   './build/js/**/*.*',
-    img:  './build/img/**/*.*'
-  }
+  clean: './build',
 };
 
 /**
  *  Очистка сборочной директории
  */
-gulp.task('clean', function(cb) {
-  del([path.clean.html, path.clean.css, path.clean.js, path.clean.img]).then(paths => {
+gulp.task('clean', cb => {
+  del([path.clean]).then(paths => {
     console.log('Deleted files and folders:\n', paths.join('\n'));
     cb();
   });
@@ -55,7 +53,7 @@ gulp.task('clean', function(cb) {
 /**
  *  Обработка HTML и перенос в path.build.html
  */
-gulp.task('html:build', function() {
+gulp.task('html:build', () => {
   return gulp.src(path.src.html)
             .pipe(prettify({
               indent_char: ' ',
@@ -68,7 +66,7 @@ gulp.task('html:build', function() {
 /**
  *  Компиляция SASS в CSS, импорт CSS-библиотек, установка префиксов и перенос в path.build.css
  */
-gulp.task('scss:build', function() {
+gulp.task('scss:build', () => {
   return gulp.src(path.src.scss)
             .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
             .pipe(autoprefixer())
@@ -80,7 +78,7 @@ gulp.task('scss:build', function() {
 /**
  *  Транспиляция JS в ES5
  */
-gulp.task('js:transpile', function() {
+gulp.task('js:transpile', () => {
   return gulp.src(path.src.js.base)
             .pipe(plumber())
             .pipe(jshint())
@@ -97,7 +95,7 @@ gulp.task('js:transpile', function() {
 /**
  *  Слияние jQuery и базовых скриптов в один файл, минификация и перенос в path.build.js
  */
-gulp.task('js:concat', function() {
+gulp.task('js:concat', () => {
   return gulp.src([
               path.src.js.jQuery,
               path.src.js.baseTranspiled
@@ -111,7 +109,7 @@ gulp.task('js:concat', function() {
 /**
  * Удаление транспилированного JS, после сборки и переноса всех скриптов в path.build.js
  */
-gulp.task('js:clean', function(cb) {
+gulp.task('js:clean', cb => {
   del(path.src.js.baseTranspiled).then(() => {
     console.log('Deleted file: _script.js');
     cb();
@@ -126,7 +124,7 @@ gulp.task('js:build', gulp.series('js:transpile', 'js:concat', 'js:clean'));
 /**
  *  Оптимизация изображений и перенос в path.build.img
  */
-gulp.task('image:build', function() {
+gulp.task('image:build', () => {
   return gulp.src(path.src.img)
             .pipe(imagemin({
               progressive: true,
@@ -137,19 +135,29 @@ gulp.task('image:build', function() {
             .pipe(gulp.dest(path.build.img))
             .pipe(reload({ stream: true }));
 });
-      
+
+/**
+ *  Copy sounds into './build/sounds' folder
+ */
+gulp.task('sounds:copy', () => {
+  return gulp.src(path.src.sounds)
+    .pipe(newer(path.build.sounds))
+    .pipe(gulp.dest(path.build.sounds))
+    .pipe(reload({ stream: true }));
+});
+
 /**
  *  Общая задача сборки проекта в ./build/
  */
-gulp.task('build', gulp.series('clean', gulp.parallel('html:build', 'scss:build', 'js:build', 'image:build')));
+gulp.task('build', gulp.series('clean', gulp.parallel('html:build', 'scss:build', 'js:build', 'image:build', 'sounds:copy')));
 
 /**
  *  Запуск сервера
  */
-gulp.task('webserver', function() {
+gulp.task('webserver', () => {
   browserSync.init({
     server: {
-      baseDir: "./build/"
+      baseDir: './build/'
     },
     notify: false
   });
@@ -158,11 +166,12 @@ gulp.task('webserver', function() {
 /**
  *  Наблюдение за изменениями
  */
-gulp.task('watch', function() {
-  gulp.watch(path.src.html,    gulp.task('html:build'));
-  gulp.watch(path.src.scss,    gulp.task('scss:build'));
+gulp.task('watch', () => {
+  gulp.watch(path.src.html, gulp.task('html:build'));
+  gulp.watch(path.src.scss, gulp.task('scss:build'));
   gulp.watch(path.src.js.base, gulp.task('js:build'));
-  gulp.watch(path.src.img,     gulp.task('image:build'));
+  gulp.watch(path.src.img, gulp.task('image:build'));
+  gulp.watch(path.src.sounds, gulp.task('sounds:copy'));
 });
 
 /**
