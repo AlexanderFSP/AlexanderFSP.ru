@@ -2,14 +2,11 @@
 
 const gulp         = require('gulp'),
       del          = require('del'),
-      notify       = require("gulp-notify"),
       browserSync  = require('browser-sync').create(),
       reload       = browserSync.reload,
       prettify     = require('gulp-html-prettify'),
       sass         = require('gulp-sass'),
-      importCss    = require('gulp-import-css'),
       autoprefixer = require('gulp-autoprefixer'),
-      cssmin       = require('gulp-cssmin'),
       imagemin     = require('gulp-imagemin'),
       pngquant     = require('imagemin-pngquant'),
       plumber      = require('gulp-plumber'),
@@ -51,7 +48,6 @@ const path = {
 gulp.task('clean', function(cb) {
   del([path.clean.html, path.clean.css, path.clean.js, path.clean.img]).then(paths => {
     console.log('Deleted files and folders:\n', paths.join('\n'));
-    notify('Очистка сборочной директории');
     cb();
   });
 });
@@ -66,8 +62,7 @@ gulp.task('html:build', function() {
               indent_size: 2
             }))
             .pipe(gulp.dest(path.build.html))
-            .pipe(notify('Обработка HTML и перенос в path.build.html'))
-            .pipe(reload({stream: true}));
+            .pipe(reload({ stream: true }));
 });
 
 /**
@@ -75,19 +70,11 @@ gulp.task('html:build', function() {
  */
 gulp.task('scss:build', function() {
   return gulp.src(path.src.scss)
-            .pipe(sass().on('error', sass.logError))
-            .pipe(importCss())
-            .pipe(autoprefixer({
-              browsers: ['last 2 versions'],
-              cascade: false
-            }))
-            .pipe(cssmin())
-            .pipe(rename({
-              suffix: ".min"
-            }))
+            .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+            .pipe(autoprefixer())
+            .pipe(rename({ suffix: '.min' }))
             .pipe(gulp.dest(path.build.css))
-            .pipe(notify('Компиляция SASS в CSS, добавление библиотеки Normalize.css, установка префиксов и перенос в path.build.css'))
-            .pipe(reload({stream: true}));
+            .pipe(reload({ stream: true }));
 });
 
 /**
@@ -104,8 +91,7 @@ gulp.task('js:transpile', function() {
               gutil.log(gutil.colors.red(err.message));
             })
             .pipe(rename('_script.js'))
-            .pipe(gulp.dest('./src/js/'))
-            .pipe(notify('Транспиляция JS в ES5'));
+            .pipe(gulp.dest('./src/js/'));
 });
 
 /**
@@ -119,8 +105,7 @@ gulp.task('js:concat', function() {
             .pipe(concat('scripts.min.js'))
             .pipe(uglify())
             .pipe(gulp.dest(path.build.js))
-            .pipe(notify('Слияние jQuery и базовых скриптов в один файл, минификация и перенос в path.build.js'))
-            .pipe(reload({stream: true}));
+            .pipe(reload({ stream: true }));
 });
 
 /**
@@ -150,8 +135,7 @@ gulp.task('image:build', function() {
               interlaced: true
             }))
             .pipe(gulp.dest(path.build.img))
-            .pipe(notify('Оптимизация изображений и перенос в path.build.img'))
-            .pipe(reload({stream: true}));
+            .pipe(reload({ stream: true }));
 });
       
 /**

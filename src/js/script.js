@@ -138,7 +138,7 @@
      *  Запрос на получение информации обо мне
      */
     $('li#about-me').on('click', function() {
-      postMessage('user-message', 'Расскажи-ка о себе <img src="../img/thinking-face.png";">');
+      postMessage('user-message', 'Расскажи-ка о себе <img src="./img/thinking-face.png";">');
       setTimeout(function() {
         postMessage('bot-message', 
         `Меня зовут Александр. Мне 19 лет. В настоящее время проживаю в СПб. Студент 3-го курса СПбГУТ по направлению "Программная инженерия". Занимаюсь вёрсткой, front-end разработкой, а также написанием скриптов для автоматизации работы в браузере на связке iMacros v8.9.7 и Mozilla FF.`, '82%');
@@ -157,13 +157,13 @@
      *  Запрос на получение моего портфолио
      */
     $('li#portfolio').on('click', function() {
-      postMessage('user-message', 'А чем занимался? <img src="../img/face-with-monoclepng.png";">');
+      postMessage('user-message', 'А чем занимался? <img src="./img/face-with-monoclepng.png";">');
       setTimeout(function() {
         postMessage('bot-message', 
         `Мои проекты:<br>
-        <img src="../img/github_logo.png"> <a href="https://github.com/AlexanderFSP" target="_blank">github.com/AlexanderFSP</a><br>
-        <img src="../img/rucaptcha.png"> <a href="https://rucaptcha.com/software/view/freebitcoin-multicaptcha-bot" target="_blank">MultiCaptchaBot / Топик</a><br>
-        <img src="../img/wix.png"> <a href="https://multicaptchabot.wixsite.com/multicaptchabot" target="_blank">MultiCaptchaBot / Сайт</a>
+        <img src="./img/github_logo.png"> <a href="https://github.com/AlexanderFSP" target="_blank">github.com/AlexanderFSP</a><br>
+        <img src="./img/rucaptcha.png"> <a href="https://rucaptcha.com/software/view/freebitcoin-multicaptcha-bot" target="_blank">MultiCaptchaBot / Топик</a><br>
+        <img src="./img/wix.png"> <a href="https://multicaptchabot.wixsite.com/multicaptchabot" target="_blank">MultiCaptchaBot / Сайт</a>
         `, '77.8%');
       }, 900);
     });
@@ -172,12 +172,12 @@
      *  Запрос на соотрудничество
      */
     $('li#offer-me').on('click', function() {
-      postMessage('user-message', 'Есть идея! <img src="../img/electric-light-bulb.png";"><img src="../img/rocket.png";"><img src="../img/money-bag.png";"><br>Сможешь помочь?');
+      postMessage('user-message', 'Есть идея! <img src="./img/electric-light-bulb.png";"><img src="./img/rocket.png";"><img src="./img/money-bag.png";"><br>Сможешь помочь?');
       setTimeout(function() {
         postMessage('bot-message', 
           `Предложить работу вы можете связавшись со мной по электронной почте или через фриланс биржу:<br>
-           <img src="../img/logo-fl.png"> <a href="https://www.fl.ru/users/AlexanderFSP/" target="_blank">fl.ru/users/AlexanderFSP</a><br>
-           <img src="../img/mail.jpg"> <a href="mailto:alexanderfsp@mail.ru">alexanderfsp@mail.ru</a>
+           <img src="./img/logo-fl.png"> <a href="https://www.fl.ru/users/AlexanderFSP/" target="_blank">fl.ru/users/AlexanderFSP</a><br>
+           <img src="./img/mail.jpg"> <a href="mailto:alexanderfsp@mail.ru">alexanderfsp@mail.ru</a>
            `, '82%');
       }, 800);
     });
@@ -186,14 +186,14 @@
      *  Запрос на получение моих контактов
      */
     $('li#contacts').on('click', function() {
-      postMessage('user-message', 'Как связаться? <img src="../img/telephone-receiver.png";">');
+      postMessage('user-message', 'Как связаться? <img src="./img/telephone-receiver.png";">');
       setTimeout(function() {
         postMessage('bot-message', 
         `Связаться со мной можно любым из перечисленных ниже способов:<br>
-        <img src="../img/vk.jpg"> <a href="https://vk.com/id66628645" target="_blank">vk.com/id66628645<br>
-        <img src="../img/telegram.jpeg"> <a href="https://t.me/AlexanderFSP" target="_blank">@AlexanderFSP<br>
-        <img src="../img/skype.png"> <a href="skype:live:7f3ffffbc5fd6a80" target="_blank">AlexanderFSP<br>
-        <img src="../img/mail.jpg"> <a href="mailto:alexanderfsp@mail.ru">alexanderfsp@mail.ru</a>
+        <img src="./img/vk.jpg"> <a href="https://vk.com/id66628645" target="_blank">vk.com/id66628645<br>
+        <img src="./img/telegram.jpeg"> <a href="https://t.me/AlexanderFSP" target="_blank">@AlexanderFSP<br>
+        <img src="./img/skype.png"> <a href="skype:live:7f3ffffbc5fd6a80" target="_blank">AlexanderFSP<br>
+        <img src="./img/mail.jpg"> <a href="mailto:alexanderfsp@mail.ru">alexanderfsp@mail.ru</a>
         `, '82%');
       }, 1000);
     });
